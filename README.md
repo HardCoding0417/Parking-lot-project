@@ -115,7 +115,7 @@ Task 1 : LCD
 Task 2 : 초음파
 Task 3 : 블루투스 통신 , LED
 Task 4 : 서보모터
-Task 5 : MCU 통
+Task 5 : MCU 통신
 
 ```
 
