@@ -52,17 +52,17 @@ pytesseract-ocr
 
 * 라즈베리파이와 STM32 사이의 통신을 위한 UART설정이 필요하다.
 
-```shell
+```
 Embedded part.
 
 clock configuration
 : 100MHz
 
 1. Ultrasonic set
-ultra 1\'s TIM2 trigger pin : GPIOA8
-ulrta 1\'s TIM2 echo pin : PA0
-ultra 2\'s TIM2 trigger pin : GPIOB5
-ulrta 2\'s TIM2 echo pin : PB10
+ultra 1's TIM2 trigger pin : GPIOA8
+ulrta 1's TIM2 echo pin : PA0
+ultra 2's TIM2 trigger pin : GPIOB5
+ulrta 2's TIM2 echo pin : PB10
 
 Channel : 1, 3
 Prescale : 100-1
@@ -115,7 +115,7 @@ Task 1 : LCD
 Task 2 : 초음파
 Task 3 : 블루투스 통신 , LED
 Task 4 : 서보모터
-Task 5 : MCU 통
+Task 5 : MCU 통신
 
 ```
 
