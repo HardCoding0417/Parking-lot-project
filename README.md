@@ -14,7 +14,7 @@
 git clone https://github.com/xxx/yyy/zzz
 ```
 
-## Prerequite
+## Prerequisite
 
 * (프로잭트를 실행하기 위해 필요한 dependencies 및 configuration들이 있다면, 설치 및 설정 방법에 대해 기술)
 
