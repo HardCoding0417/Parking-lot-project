@@ -34,6 +34,7 @@ gh repo clone HardCoding0417/Parking-lot-project
 ```shell
 python -m venv .venv
 source .venv/bin/activate
+sudo apt install tesseract-ocr
 pip install -r requirements.txt
 ```
 * requirements.txt로 설치가 잘 되지 않는다면
