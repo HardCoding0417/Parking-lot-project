@@ -8,7 +8,7 @@ RTOS를 사용하려면 Timebase Source를 systick이 아니라 다른 TIM를 �
 
 
 * Interface
-![Interface](./imgs/v1_use.png)
+![Interface](./imgs/v1_use.png)  
 저희는 CMSIS_V1을 사용했습니다. 하지만 V2를 사용해도 큰 문제는 없습니다.   
 
 
