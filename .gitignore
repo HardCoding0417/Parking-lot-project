@@ -42,4 +42,9 @@
 *~
 
 # Libraries
-/lib
+lib/
+
+# etc
+.park/
+park_rpi/
+__pycache__/
