@@ -3,11 +3,14 @@ import cv2
 import pytesseract
 import re
 import datetime
+import os
 # YOLO model
 license_plate_model = YOLO("best.pt")
 
 def logging_img(info, img):
-    save_folder = './img/'
+    save_folder = 'img'
+    if not os.path.isdir():
+        os.mkdir(save_folder)
     name = save_folder+ current_time + '_' + info + '.jpg'
     cv2.imwrite(name, img)
     return 
