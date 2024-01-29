@@ -59,13 +59,13 @@ def license_to_string(license_plates,frame):
             re_str = re.sub('[^a-zA-Z0-9]','',license_str)
             print("re_str :",re_str)
             print("re str length :",len(re_str))
-            logging_img('OCR', frame)
+            logging_img('OCR', license_plate_crop_thresh)
             return re_str
         else:
             print("ocr_error and ocr length is less than 5")
     
     print("failed ocr")
-    logging_img('no_OCR', frame)
+    logging_img('no_OCR', license_plate_crop_thresh)
     return None
 
 
