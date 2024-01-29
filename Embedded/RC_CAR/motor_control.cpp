@@ -12,6 +12,7 @@ void Driving_forward(int in1, int in2, int in3, int in4, int speed)
     gpioPWM(ENA, speed);    //enableA takes a duty
     gpioPWM(ENB, speed);    //enableB takes a duty
 }
+
 //Drive backward
 void Driving_backward(int in1, int in2, int in3 ,int in4, int speed)
 {
@@ -19,6 +20,16 @@ void Driving_backward(int in1, int in2, int in3 ,int in4, int speed)
     gpioWrite(in2, 1);
     gpioWrite(in3, 1);
     gpioWrite(in4, 0);
+    gpioPWM(ENA, speed);
+    gpioPWM(ENB, speed);
+}
+
+void Driving_left(int in1, int in2, int in3, int in4, int speed)
+{
+    gpioWrite(in1, 0);
+    gpioWrite(in2, 1);
+    gpioWrite(in3, 0);
+    gpioWrite(in4, 1);
     gpioPWM(ENA, speed);
     gpioPWM(ENB, speed);
 }
@@ -33,5 +44,4 @@ void Driving_stop(int in1, int in2, int in3, int in4, int speed)
     gpioPWM(ENA, speed);    //0
     gpioPWM(ENB, speed);    //0
 }
-
 
