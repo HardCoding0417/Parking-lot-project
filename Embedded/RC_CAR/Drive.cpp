@@ -16,28 +16,33 @@ void signalHandler(int signum) {
 void controlMotors(char input) {
     // Add your motor control logic here
     switch (input) {
+
+        case '0':
+            std::cout << "Driving backward" << std::endl;
+            Driving_backward(IN1, IN2, IN3, IN4, 70);
+            usleep(520000);
+            break;
         case '1':
             std::cout << "Driving forward" << std::endl;
-            Driving_forward(IN1, IN2, IN3, IN4, 90);
-            usleep(1000000);
+            Driving_forward(IN1, IN2, IN3, IN4, 70);
+            usleep(500000);
             break;
         case '2':
-            std::cout << "Driving Pause" << std::endl;
-            Driving_stop(IN1, IN2, IN3, IN4, 0);
+            std::cout << "Driving fast" << std::endl;
+            Driving_forward(IN1, IN2, IN3, IN4, 90);
+            usleep(1380000);
             break;
         case '3':
-            std::cout << "Driving fast" << std::endl;
-            Driving_forward(IN1, IN2, IN3, IN4, 120);
-            usleep(1000000);
+            std::cout << "Driving forward" << std::endl;
+            Driving_forward(IN1, IN2, IN3, IN4, 70);
+            usleep(1150000);
             break;
         case '4':
-            std::cout << "Driving backward" << std::endl;
-            Driving_backward(IN1, IN2, IN3, IN4, 100);
-            usleep(1000000);
+            std::cout << "Driving forward" << std::endl;
+            Driving_forward(IN1, IN2, IN3, IN4, 70);
+            usleep(1500000);
             break;
         default:
-            // Stop motors if no valid input
-            std::cout << "Stop" << std::endl;
             Driving_stop(IN1, IN2, IN3, IN4, 0);
             break;
     }
@@ -50,14 +55,14 @@ int main() {
         std::cerr << "GPIO initialization failed. Exiting..." << std::endl;
         return 1;
     }
-    //ctrl+c == exit
+
     signal(SIGINT, signalHandler);
 
     const char* device = "/dev/ttyS0";
     const int baudrate = 9600;
 
     char* mutableDevice = const_cast<char*>(device);
-    int serial_port = serOpen(mutableDevice, baudrate, 0); //serial open
+    int serial_port = serOpen(mutableDevice, baudrate, 0);
     if (serial_port < 0) {
         std::cerr << "Failed to open serial port. Exiting..." << std::endl;
         gpioTerminate();
@@ -75,7 +80,7 @@ int main() {
     gpioSetPWMfrequency(ENB, 50);
 
     while (1) {
-        // reading user's input on bluetooth comunnication
+        // reading input
         if (serDataAvailable(serial_port) > 0) {
             char input = serReadByte(serial_port);
             // bletooth input processing
@@ -83,10 +88,9 @@ int main() {
         }
         usleep(100000); // 0.1sec waiting
     }
-    //close
+
     serClose(serial_port);
     gpioTerminate();
 
     return 0;
 }
-
