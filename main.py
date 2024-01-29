@@ -49,6 +49,7 @@ cnt =0
 cam_number = 0
 location = {0: 'I', 2: 'O'}
 position = {'I': 0, 'O': 2}
+parking_pee_per_sec = 100
 
 
 while True:

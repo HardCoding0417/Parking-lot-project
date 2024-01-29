@@ -7,7 +7,7 @@ import os
 # YOLO model
 license_plate_model = YOLO("best.pt")
 
-def logging_img(info, img):
+def logging_img(info, img, current_time):
     save_folder = './img/'
     if not os.path.isdir('img'):
         os.mkdir(save_folder)
@@ -15,8 +15,6 @@ def logging_img(info, img):
     cv2.imwrite(name, img)
     return 
 
-current_time = datetime.datetime.today()
-current_time = current_time.strftime('%Y%m%d_%H_%M%S')
 
 # detect license plate from camera frame
 def license_detect(camera=1):
@@ -27,10 +25,14 @@ def license_detect(camera=1):
         license_plates = license_plate_model(frame)[0]
 
         if license_plates:
-            logging_img('detect', frame)
+            current_time = datetime.datetime.today()
+            current_time = current_time.strftime('%Y%m%d_%H_%M%S')
+            logging_img('detect', frame, current_time)
             return (license_plates,frame)
         else:
-            logging_img('no_detect', frame)
+            current_time = datetime.datetime.today()
+            current_time = current_time.strftime('%Y%m%d_%H_%M%S')
+            logging_img('no_detect', frame, current_time)
             print("no detect license")
             return (None,None)
     else:
@@ -62,13 +64,17 @@ def license_to_string(license_plates,frame):
             re_str = re.sub('[^a-zA-Z0-9]','',license_str)
             print("re_str :",re_str)
             print("re str length :",len(re_str))
-            logging_img('OCR', license_plate_crop_thresh)
+            current_time = datetime.datetime.today()
+            current_time = current_time.strftime('%Y%m%d_%H_%M%S')
+            logging_img('OCR', license_plate_crop_thresh, current_time)
             return re_str
         else:
             print("ocr_error and ocr length is less than 5")
     
     print("failed ocr")
-    logging_img('no_OCR', license_plate_crop_thresh)
+    current_time = datetime.datetime.today()
+    current_time = current_time.strftime('%Y%m%d_%H_%M%S')
+    logging_img('no_OCR', license_plate_crop_thresh, current_time)
     return None
 
 
