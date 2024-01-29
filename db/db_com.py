@@ -90,8 +90,8 @@ if __name__ == '__main__':
     insert_car_info('123Q1234',current_time)
 
     # 데이터를 조회하는 코드
-    data = client[db_name][col_name].find()
-    for data in data:
+    datas = client[db_name][col_name].find()
+    for data in datas:
         print(data)
     
     time.sleep(1)
