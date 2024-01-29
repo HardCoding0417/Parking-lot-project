@@ -42,7 +42,7 @@ def uart_rx(rq):
 
 
 def uart_tx(tq):
-    '''STM32로부터 보낼 데이터를 큐에 넣는 함수. 스레딩용'''
+    '''STM32에 보낼 데이터를 큐에 넣는 함수. 스레딩용'''
     while True:
         msg  = tq.get()
         uart_transmit(msg)
