@@ -14,11 +14,6 @@ def check_pattern(s):
     pattern = r'^\d{3}[A-Za-z]\d{4}$'
     return bool(re.match(pattern, s))
 
-def logging_img(pass_or_fail, img):
-    name = current_time + '_' + pass_or_fail + '.jpg'
-    cv2.imwrite(name, img)
-    return 
-
 
 # DB
 

@@ -11,12 +11,12 @@ def logging_img(info, img):
     save_folder = './img/'
     if not os.path.isdir('img'):
         os.mkdir(save_folder)
-    name = save_folder+ current_time + '_' + info + '.jpg'
+    name = save_folder + current_time + '_' + info + '.jpg'
     cv2.imwrite(name, img)
     return 
 
 current_time = datetime.datetime.today()
-current_time = current_time.strftime('%Y%m%d%H%M%S')
+current_time = current_time.strftime('%Y%m%d_%H_%M%S')
 
 # detect license plate from camera frame
 def license_detect(camera=1):
