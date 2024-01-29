@@ -8,7 +8,7 @@ import os
 license_plate_model = YOLO("best.pt")
 
 def logging_img(info, img):
-    save_folder = 'img'
+    save_folder = './img/'
     if not os.path.isdir('img'):
         os.mkdir(save_folder)
     name = save_folder+ current_time + '_' + info + '.jpg'
