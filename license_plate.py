@@ -2,8 +2,18 @@ from ultralytics import YOLO
 import cv2
 import pytesseract
 import re
+import datetime
 # YOLO model
 license_plate_model = YOLO("best.pt")
+
+def logging_img(info, img):
+    save_folder = './img/'
+    name = save_folder+ current_time + '_' + info + '.jpg'
+    cv2.imwrite(name, img)
+    return 
+
+current_time = datetime.datetime.today()
+current_time = current_time.strftime('%Y%m%d%H%M%S')
 
 # detect license plate from camera frame
 def license_detect(camera=1):
@@ -14,8 +24,10 @@ def license_detect(camera=1):
         license_plates = license_plate_model(frame)[0]
 
         if license_plates:
+            logging_img('detect', frame)
             return (license_plates,frame)
         else:
+            logging_img('no_detect', frame)
             print("no detect license")
             return (None,None)
     else:
@@ -31,12 +43,13 @@ def license_to_string(license_plates,frame):
     
     for license_plate in license_plates.boxes.data.tolist():
         x1, y1, x2, y2,score, class_id = license_plate
+        
+        # preprocess image
         license_plate_crop = frame[int(y1):int(y2),int(x1):int(x2),]
-        #cv2.imshow("crop",license_plate_crop)
         license_plate_crop_gray = cv2.cvtColor(license_plate_crop,cv2.COLOR_BGR2GRAY)
-        #cv2.imshow("crop_gray",license_plate_crop_gray)
         _,license_plate_crop_thresh=cv2.threshold(license_plate_crop_gray,64,255,cv2.THRESH_BINARY_INV)
-        #cv2.imshow("crop_thresh",license_plate_crop_thresh)
+
+        # OCR
         license_str = pytesseract.image_to_string(license_plate_crop_thresh)
         if license_str:
             print("ocr value :",license_str)
@@ -46,11 +59,13 @@ def license_to_string(license_plates,frame):
             re_str = re.sub('[^a-zA-Z0-9]','',license_str)
             print("re_str :",re_str)
             print("re str length :",len(re_str))
+            logging_img('OCR', license_plate_crop_thresh)
             return re_str
         else:
             print("ocr_error and ocr length is less than 5")
     
     print("failed ocr")
+    logging_img('no_OCR', license_plate_crop_thresh)
     return None
 
 
