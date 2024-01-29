@@ -7,11 +7,17 @@ import re
 import db_com
 import datetime
 import time
+import cv2
 
 def check_pattern(s):
     '''전달 받은 데이터가 번호판 양식에 맞는지 체크해주는 함수'''
     pattern = r'^\d{3}[A-Za-z]\d{4}$'
     return bool(re.match(pattern, s))
+
+def logging_img(pass_or_fail, img):
+    name = current_time + '_' + pass_or_fail + '.jpg'
+    cv2.imwrite(name, img)
+    return 
 
 
 # DB
@@ -89,13 +95,13 @@ while True:
 
             # 출차 상황이면 DB에 출차 데이터를 넣는다.
             elif location[cam_number]=='O':
-                result_Out = db_com.delete_car_info(number)
+                result_out = db_com.delete_car_info(number)
                 # DB에 차량 데이터가 들어가지 않았을 경우에 대한 예외처리
-                if result_Out == False:
+                if result_out == False:
                     transmit = location[cam_number]+"AIL"+(" "*17)
                 else:
                     # 송신할 데이터를 준비.
-                    fee = result_Out[1]
+                    fee = result_out[1]
                     charge = str(fee)+"WON"
                     transmit_charge = charge+" "*(7-len(charge))
                     print("transmit_charge:",transmit_charge)
