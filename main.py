@@ -6,24 +6,29 @@ from license_plate import license_detect, license_to_string
 import re
 import db_com
 import datetime
-import time
-import cv2
+import socket
+
+def transmit_order(host, port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((host, port))
+        print(f"서버에 연결됨: {host}:{port}")
+        # 서버에 메세지 보내기
+        client_socket.sendall(b'1')  # 문자 '1'을 바이트로 전송
+        print(f"transmit order")
 
 def check_pattern(s):
     '''전달 받은 데이터가 번호판 양식에 맞는지 체크해주는 함수'''
     pattern = r'^\d{3}[A-Za-z]\d{4}$'
     return bool(re.match(pattern, s))
 
-
 # DB
-
-host = '10.10.59.223'  # host ip : db server
-port = 27017
+db_host = '10.10.59.223'  # host ip : db server
+db_port = 27017
 username = 'rpi'
 password = '1234'
 
-client = MongoClient(host=host,
-                     port=port,
+client = MongoClient(host=db_host,
+                     port=db_port,
                      username=username,
                      password=password)
 
@@ -43,6 +48,9 @@ t_thread = threading.Thread(target=uart.uart_tx, args=(tq,))
 r_thread.start()
 t_thread.start()
 
+# init for voice interface
+voice_host = '10.10.59.237'
+voice_port = 2000
 
 # 초기화
 cnt =0
@@ -51,13 +59,12 @@ location = {0: 'I', 2: 'O'}
 position = {'I': 0, 'O': 2}
 parking_pee_per_sec = 100
 
-
 while True:
     # 수신 큐로부터 메세지를 꺼낸다.
     msg = rq.get()
+    transmit_order(voice_host, voice_port)
     transmit = ""
     print("msg:", msg)
-
     # I나 O를 받기로 약속했다. I는 입차상황, O는 출차상황임. 잘못된 메세지는 거른다.
     if msg == 'I' or msg == 'O':
         # 입차 시에는 입구 카메라, 출차 시에는 출차 카메라를 작동하여 번호판을 디텍트한다.

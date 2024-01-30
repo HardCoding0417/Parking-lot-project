@@ -88,15 +88,16 @@ current_time = current_time.strftime('%Y%m%d%H%M%S')
 if __name__ == '__main__':
 
     # db에 넣는 코드
-    insert_car_info('123Q1234',current_time)
+    insert_car_info('123Q1111',current_time)
+    insert_car_info('123Q2222',current_time)
 
     # 데이터를 조회하는 코드
     datas = client[db_name][col_name].find()
     for data in datas:
         print(data)
     
-    time.sleep(1)
+    # time.sleep(1)
 
     # db에서 삭제하는 코드
-    info = delete_car_info('123Q1234')
-    print(info)
+    # info = delete_car_info('123Q1234')
+    # print(info)
