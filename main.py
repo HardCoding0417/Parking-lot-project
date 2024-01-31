@@ -49,7 +49,7 @@ r_thread.start()
 t_thread.start()
 
 # init for voice interface
-voice_host = '10.10.59.237'
+voice_host = '10.10.59.55'
 voice_port = 2000
 
 # 초기화
